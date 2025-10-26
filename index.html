@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 校园 "稻草人" - 对抗攻击演示</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1><b>生成对抗样本：带扰动的图片</b></h1>
+        
+        <div id="instruction-area" class="message-area">
+            <h3>操作步骤：</h3> 
+            <p>1. 点击“选择图片”按钮，上传原始图片。</p>  
+            <p>2. 选择扰动类型：“扰动类型1”或“扰动类型2”。 </p>  
+            <p>3. 点击“生成对抗样本”按钮，等待系统生成完成，再点击“下载对抗样本”按钮，并将文件另存。</p>
+        </div>
+        
+        <div class="flow-diagram">
+            
+            <div class="step-container">
+                <div class="step step-upload">
+                    <!-- 新增解释框 -->
+        <div id="original-info" class="model-info-output">
+            <strong>解释:</strong><br>
+            <a style="font-family:'微软雅黑 light', sans-serif;">原始图片是未经改变的数据。它在实验中起基准作用，用于验证扰动对AI模型分类结果的影响。</a>
+        </div>
+                    <input type="file" id="file-input" accept="image/jpeg, image/png, image/jpg">
+                    
+                    <div class="step-content-box">
+                        <div class="image-box">
+                            <div id="original-placeholder" class="image-placeholder-text">
+                                （等待上传...）
+                            </div>
+                            <canvas id="original-image-canvas" class="image-preview-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="step-bottom-box">
+                        <label for="file-input" class="custom-file-upload" id="upload-button-label">选择图片</label>
+                    </div>
+                </div>
+                <div class="step-label">上传原始图片</div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <div class="step-container">
+                <div class="step step-noise">
+                    
+                    <div class="step-content-box">
+                        <div id="modelInfo">
+                            <div style="margin-bottom: 7px;"><a style="font-size: medium; font-family: '微软雅黑 light', sans-serif;"><strong>解释:</strong><br></a></div>
+                            <a style="font-family:'微软雅黑 light', sans-serif;">扰动是一种经过精确计算的微小"噪声"，注入图片后，人眼几乎无法察觉图像的变化。</a>
+                        </div>
+                        
+                        <div id="noise-image-display" class="noise-display-box">
+                            <span id="noise-text-overlay" class="noise-text-overlay"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="step-bottom-box">
+                        <div class="noise-selection-group">
+                            <span class="noise-select-prompt"><b>选择扰动: </b></span>
+                            <select id="noise-type-select" style="font-weight:800">
+                                <option value="paste" selected>扰动类型1</option>
+                                <option value="fight">扰动类型2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-label">选择扰动类型</div>
+            </div>
+            
+            <div class="arrow">→</div>
+            
+            <div class="step-container">
+                <div class="step step-output">
+                    
+                    <div class="step-content-box">
+                        <div id="adversarial-info" class="model-info-output">
+                            <div style="margin-bottom: 7px;"><a style="font-size: medium; font-family: '微软雅黑 light', sans-serif;"><strong>解释:</strong><br></a></div>
+                            <a style="font-family:'微软雅黑 light', sans-serif;">在原图里加入一些微小扰动时，就得到了“对抗样本”。之所以叫“对抗”，是因为它能用来考验AI识别的稳定性。</a>
+                        </div>
+                        
+                        <div class="image-box">
+                            <div id="output-placeholder" class="image-placeholder-text">
+                                （等待生成...）
+                            </div>
+                            <canvas id="output-image-canvas" class="image-preview-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="step-bottom-box">
+                        <button id="generate-btn" class="generate-button disabled" disabled>
+                            生成对抗样本
+                        </button>
+                        <a id="download-btn" href="#" download class="download-button">
+                            下载对抗样本
+                        </a>
+                    </div>
+                </div>
+                <div class="step-label">生成对抗样本</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="metadata.js"></script> 
+    <script src="image_processor.js"></script>
+</body>
+</html>
